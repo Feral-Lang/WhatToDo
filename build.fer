@@ -1,0 +1,8 @@
+let io = import('std/io');
+let cmake = import('std/cmakeGen');
+
+let builder = cmake.new('todo');
+
+let install = builder.addInstall('binaries');
+install.setFilePath('bin').disableProjectSuffix();
+builder.gen();
