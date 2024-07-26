@@ -5,6 +5,7 @@ let fs = import('std/fs');
 let os = import('std/os');
 let sys = import('std/sys');
 let vec = import('std/vec');
+
 let todo = import('todo/todo');
 
 if sys.args.len() < 1 {
@@ -14,7 +15,7 @@ if sys.args.len() < 1 {
 
 let filepath = os.getEnv('NOTES_DIR');
 if filepath.empty() { filepath = fs.pathFrom(os.getEnvHome(), '.notes.txt'); }
-else { os.mkdir(filepath); fs.pathAppend(filepath, 'notes.txt'); }
+else { fs.mkdir(filepath); fs.pathAppend(filepath, 'notes.txt'); }
 
 let todos = todo.new();
 todos.loadFile(filepath);
