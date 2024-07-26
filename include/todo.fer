@@ -1,24 +1,22 @@
 let io = import('std/io');
 let fs = import('std/fs');
 let ptr = import('std/ptr');
-let str = import('std/str');
 let vec = import('std/vec');
-let lang = import('std/lang');
 
-let ItemState = lang.enum(
+let ItemState = enum(
 	.DO,
 	.DOING,
 	.DONE
 );
 
-let ToDoItem = lang.struct(
+let ToDoItem = struct(
 	state = ItemState.DO,
 	data = '',
 	subItems = vec.new(refs = true)
 );
 ToDoItem.setTypeName('ToDoItem');
 
-let ToDo = lang.struct(
+let ToDo = struct(
 	items = vec.new(refs = true)
 );
 ToDo.setTypeName('ToDo');
