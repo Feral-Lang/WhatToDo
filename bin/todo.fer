@@ -9,7 +9,7 @@ let vec = import('std/vec');
 let todo = import('todo/todo');
 
 if sys.args.len() < 1 {
-	io.println('Enter subcommand: l(ist)|a(dd)|i(nsert)|r(emove)|o(ngoing)|d(one)|m(ove)');
+	io.println('Enter subcommand: l(ist)|a(dd)|i(nsert)|r(emove)|t(odo)|o(ngoing)|d(one)|m(ove)');
 	sys.exit(1);
 }
 
@@ -67,13 +67,14 @@ if subcmd == 'l' || subcmd == 'list' {
 	}
 	io.cprintln('>> Removed: ', todo.getItemStateCol(item.state), item.data, '{0}');
 	todos.saveFile(filepath);
-} elif subcmd == 'o' || subcmd == 'ongoing' || subcmd == 'd' || subcmd == 'done' {
+} elif subcmd == 't' || subcmd == 'todo' || subcmd == 'o' || subcmd == 'ongoing' || subcmd == 'd' || subcmd == 'done' {
 	if sys.args.len() < 2 {
-		io.println('Expected index expression to be updated, after ongoing/done subcommand');
+		io.println('Expected index expression to be updated, after todo/ongoing/done subcommand');
 		sys.exit(1);
 	}
 	let state = todo.ItemState.DO;
-	if subcmd == 'o' || subcmd == 'ongoing' { state = todo.ItemState.DOING; }
+	if subcmd == 't' || subcmd == 'todo' { state = todo.ItemState.DO; }
+	elif subcmd == 'o' || subcmd == 'ongoing' { state = todo.ItemState.DOING; }
 	elif subcmd == 'd' || subcmd == 'done' { state = todo.ItemState.DONE; }
 	let item = todos.setItemState(sys.args[1], state, true);
 	if item == nil {
