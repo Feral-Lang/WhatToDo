@@ -127,7 +127,7 @@ let removeItem in ToDo = fn(idxExpr, byUser = false) {
 		# we're at the last idx split: erase it.
 		let removalItem = ref(iter.get()[idx]);
 		iter.get().erase(idx);
-		return removalItem;
+		return ref(removalItem);
 	}
 	return nil;
 };
