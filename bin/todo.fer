@@ -5,7 +5,7 @@ let fs = import('std/fs');
 let os = import('std/os');
 let vec = import('std/vec');
 
-let todo = import('todo/todo');
+let todo = import('whattodo/todo');
 
 if feral.args.len() < 1 {
 	io.println('Enter subcommand: l(ist)|a(dd)|i(nsert)|r(emove)|t(odo)|o(ngoing)|d(one)|m(ove)');

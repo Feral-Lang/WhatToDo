@@ -1,8 +1,3 @@
-let io = import('std/io');
-let cmake = import('std/cmakeGen');
+let builder = import('pkg/builder');
 
-let builder = cmake.new('todo');
-
-let install = builder.addInstall('binaries');
-install.setFilePath('bin').disableProjectSuffix();
-builder.gen();
+# May as well be empty since nothing is to be done in this file as there's no C/C++ library to build.
