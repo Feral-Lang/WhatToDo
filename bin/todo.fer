@@ -12,7 +12,7 @@ if feral.args.len() < 1 {
 	feral.exit(1);
 }
 
-let filepath = os.getEnv('NOTES_DIR');
+let filepath = os.getEnv('NOTES_DIR') ?? '';
 if filepath.empty() { filepath = fs.pathFrom(os.getEnvHome(), '.notes.txt'); }
 else { fs.mkdir(filepath); fs.pathAppend(filepath, 'notes.txt'); }
 
