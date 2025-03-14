@@ -1,0 +1,6 @@
+author = 'Electrux';
+name = 'WhatToDo';
+version = '1.0.0'; # Used to check if a package needs updating.
+description = 'A basic command line todo list with the ability to create nested tasks.';
+source = 'https://github.com/Feral-Lang/WhatToDo';
+# depends = {};
