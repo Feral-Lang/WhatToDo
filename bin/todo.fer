@@ -8,8 +8,8 @@ let vec = import('std/vec');
 let todo = import('whattodo/todo');
 
 if feral.args.len() < 1 {
-	io.println('Enter subcommand: l(ist)|a(dd)|i(nsert)|r(emove)|t(odo)|o(ngoing)|d(one)|m(ove)');
-	feral.exit(1);
+    io.println('Enter subcommand: l(ist)|a(dd)|i(nsert)|r(emove)|t(odo)|o(ngoing)|d(one)|m(ove)');
+    feral.exit(1);
 }
 
 let filepath = os.getEnv('NOTES_DIR') ?? '';
@@ -25,76 +25,76 @@ todos.loadFile(filepath);
 let subcmd = feral.args[0];
 
 if subcmd == 'l' || subcmd == 'list' {
-	todos.disp();
+    todos.disp();
 } elif subcmd == 'a' || subcmd == 'add' {
-	if feral.args.len() < 2 {
-		io.println('Expected item to be added, after add subcommand');
-		feral.exit(1);
-	}
-	let note = '';
-	for let i = 1; i < feral.args.len(); ++i { note += feral.args[i] + ' '; }
-	note.pop();
-	if !todos.addItem(note) {
-		io.println('Failed to add item: ', note);
-		feral.exit(1);
-	}
-	todos.disp();
-	todos.saveFile(filepath);
+    if feral.args.len() < 2 {
+        io.println('Expected item to be added, after add subcommand');
+        feral.exit(1);
+    }
+    let note = '';
+    for let i = 1; i < feral.args.len(); ++i { note += feral.args[i] + ' '; }
+    note.pop();
+    if !todos.addItem(note) {
+        io.println('Failed to add item: ', note);
+        feral.exit(1);
+    }
+    todos.disp();
+    todos.saveFile(filepath);
 } elif subcmd == 'i' || subcmd == 'insert' {
-	if feral.args.len() < 3 {
-		io.println('Expected index expression and item to be added, after insert subcommand');
-		feral.exit(1);
-	}
-	let note = '';
-	for let i = 2; i < feral.args.len(); ++i { note += feral.args[i] + ' '; }
-	note.pop();
-	if !todos.addItem(note, true, feral.args[1]) {
-		io.println('Failed to insert item: `', note, '` at: ', feral.args[1]);
-		feral.exit(1);
-	}
-	todos.disp();
-	todos.saveFile(filepath);
+    if feral.args.len() < 3 {
+        io.println('Expected index expression and item to be added, after insert subcommand');
+        feral.exit(1);
+    }
+    let note = '';
+    for let i = 2; i < feral.args.len(); ++i { note += feral.args[i] + ' '; }
+    note.pop();
+    if !todos.addItem(note, true, feral.args[1]) {
+        io.println('Failed to insert item: `', note, '` at: ', feral.args[1]);
+        feral.exit(1);
+    }
+    todos.disp();
+    todos.saveFile(filepath);
 } elif subcmd == 'r' || subcmd == 'remove' {
-	if feral.args.len() < 2 {
-		io.println('Expected index expression to be removed, after remove subcommand');
-		feral.exit(1);
-	}
-	let item = todos.removeItem(feral.args[1], true);
-	if item == nil {
-		io.println('Failed to remove item at: ', feral.args[1]);
-		feral.exit(1);
-	}
-	io.cprintln('>> Removed: ', todo.getItemStateCol(item.state), item.data, '{0}');
-	todos.saveFile(filepath);
+    if feral.args.len() < 2 {
+        io.println('Expected index expression to be removed, after remove subcommand');
+        feral.exit(1);
+    }
+    let item = todos.removeItem(feral.args[1], true);
+    if item == nil {
+        io.println('Failed to remove item at: ', feral.args[1]);
+        feral.exit(1);
+    }
+    io.cprintln('>> Removed: ', todo.getItemStateCol(item.state), item.data, '{0}');
+    todos.saveFile(filepath);
 } elif subcmd == 't' || subcmd == 'todo' || subcmd == 'o' || subcmd == 'ongoing' || subcmd == 'd' || subcmd == 'done' {
-	if feral.args.len() < 2 {
-		io.println('Expected index expression to be updated, after todo/ongoing/done subcommand');
-		feral.exit(1);
-	}
-	let state = todo.ItemState.DO;
-	if subcmd == 't' || subcmd == 'todo' { state = todo.ItemState.DO; }
-	elif subcmd == 'o' || subcmd == 'ongoing' { state = todo.ItemState.DOING; }
-	elif subcmd == 'd' || subcmd == 'done' { state = todo.ItemState.DONE; }
-	let item = todos.setItemState(feral.args[1], state, true);
-	if item == nil {
-		io.println('Failed to update item state to `', todo.getItemStateStr(state), '` at: ', feral.args[1]);
-		feral.exit(1);
-	}
-	io.cprintln('>> Updated item state for: ', todo.getItemStateCol(state), item.data, '{0}');
-	todos.saveFile(filepath);
+    if feral.args.len() < 2 {
+        io.println('Expected index expression to be updated, after todo/ongoing/done subcommand');
+        feral.exit(1);
+    }
+    let state = todo.ItemState.DO;
+    if subcmd == 't' || subcmd == 'todo' { state = todo.ItemState.DO; }
+    elif subcmd == 'o' || subcmd == 'ongoing' { state = todo.ItemState.DOING; }
+    elif subcmd == 'd' || subcmd == 'done' { state = todo.ItemState.DONE; }
+    let item = todos.setItemState(feral.args[1], state, true);
+    if item == nil {
+        io.println('Failed to update item state to `', todo.getItemStateStr(state), '` at: ', feral.args[1]);
+        feral.exit(1);
+    }
+    io.cprintln('>> Updated item state for: ', todo.getItemStateCol(state), item.data, '{0}');
+    todos.saveFile(filepath);
 } elif subcmd == 'm' || subcmd == 'move' {
-	if feral.args.len() < 3 {
-		io.println('Expected from and to index expressions for item to be moved, after move subcommand');
-		feral.exit(1);
-	}
-	let item = todos.moveItem(feral.args[1], feral.args[2], true);
-	if item == nil {
-		io.println('Failed to move item from: ', feral.args[1], ' to: ', feral.args[2]);
-		feral.exit(1);
-	}
-	io.cprintln('>> Moved: ', todo.getItemStateCol(item.state), item.data, '{0}');
-	todos.saveFile(filepath);
+    if feral.args.len() < 3 {
+        io.println('Expected from and to index expressions for item to be moved, after move subcommand');
+        feral.exit(1);
+    }
+    let item = todos.moveItem(feral.args[1], feral.args[2], true);
+    if item == nil {
+        io.println('Failed to move item from: ', feral.args[1], ' to: ', feral.args[2]);
+        feral.exit(1);
+    }
+    io.cprintln('>> Moved: ', todo.getItemStateCol(item.state), item.data, '{0}');
+    todos.saveFile(filepath);
 } else {
-	io.println('Invalid subcommand, possible options are: l(ist)|a(dd)|i(nsert)|r(emove)|o(ngoing)|d(one)|m(ove)');
-	feral.exit(1);
+    io.println('Invalid subcommand, possible options are: l(ist)|a(dd)|i(nsert)|r(emove)|o(ngoing)|d(one)|m(ove)');
+    feral.exit(1);
 }
