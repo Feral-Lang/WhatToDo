@@ -12,12 +12,17 @@ if feral.args.len() < 1 {
     feral.exit(1);
 }
 
-let filepath = os.getEnv('NOTES_DIR') ?? '';
-if filepath.empty() { filepath = fs.pathFrom(os.getEnvHome(), '.notes.txt'); }
-else { fs.mkdir(filepath); fs.pathAppend(filepath, 'notes.txt'); }
+let notesDir = (os.getEnv('NOTES_DIR') ?? '').path();
+let notesPath = ''.path();
+if notesDir.empty() {
+    notesPath = os.getEnvHome() / '.notes.txt';
+} else {
+    fs.mkdir(notesDir);
+    notesPath = notesDir / 'notes.txt';
+}
 
 let todos = todo.new();
-todos.loadFile(filepath);
+todos.loadFile(notesPath);
 
 # let check = '2713'.getUTF8CharFromHexString();
 # let cross = '2717'.getUTF8CharFromHexString();
@@ -39,7 +44,7 @@ if subcmd == 'l' || subcmd == 'list' {
         feral.exit(1);
     }
     todos.disp();
-    todos.saveFile(filepath);
+    todos.saveFile(notesPath);
 } elif subcmd == 'i' || subcmd == 'insert' {
     if feral.args.len() < 3 {
         io.println('Expected index expression and item to be added, after insert subcommand');
@@ -53,7 +58,7 @@ if subcmd == 'l' || subcmd == 'list' {
         feral.exit(1);
     }
     todos.disp();
-    todos.saveFile(filepath);
+    todos.saveFile(notesPath);
 } elif subcmd == 'r' || subcmd == 'remove' {
     if feral.args.len() < 2 {
         io.println('Expected index expression to be removed, after remove subcommand');
@@ -65,7 +70,7 @@ if subcmd == 'l' || subcmd == 'list' {
         feral.exit(1);
     }
     io.cprintln('>> Removed: ', todo.getItemStateCol(item.state), item.data, '{0}');
-    todos.saveFile(filepath);
+    todos.saveFile(notesPath);
 } elif subcmd == 't' || subcmd == 'todo' || subcmd == 'o' || subcmd == 'ongoing' || subcmd == 'd' || subcmd == 'done' {
     if feral.args.len() < 2 {
         io.println('Expected index expression to be updated, after todo/ongoing/done subcommand');
@@ -81,7 +86,7 @@ if subcmd == 'l' || subcmd == 'list' {
         feral.exit(1);
     }
     io.cprintln('>> Updated item state for: ', todo.getItemStateCol(state), item.data, '{0}');
-    todos.saveFile(filepath);
+    todos.saveFile(notesPath);
 } elif subcmd == 'm' || subcmd == 'move' {
     if feral.args.len() < 3 {
         io.println('Expected from and to index expressions for item to be moved, after move subcommand');
@@ -93,7 +98,7 @@ if subcmd == 'l' || subcmd == 'list' {
         feral.exit(1);
     }
     io.cprintln('>> Moved: ', todo.getItemStateCol(item.state), item.data, '{0}');
-    todos.saveFile(filepath);
+    todos.saveFile(notesPath);
 } else {
     io.println('Invalid subcommand, possible options are: l(ist)|a(dd)|i(nsert)|r(emove)|o(ngoing)|d(one)|m(ove)');
     feral.exit(1);

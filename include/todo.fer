@@ -29,14 +29,14 @@ let new = fn() {
 ############################ ToDo Helper Functions ############################
 ###############################################################################
 
-let loadFile in ToDo = fn(filepath) {
+let loadFile in ToDo = fn(notesPath) {
     self.items.clear();
-    if !fs.exists(filepath) {
-        let file = fs.fopen(filepath, 'a+');
+    if !fs.exists(notesPath) {
+        let file = fs.fopen(notesPath, 'a+');
         file.seek(0, fs.SEEK_SET);
         return;
     }
-    let file = fs.fopen(filepath, 'r');
+    let file = fs.fopen(notesPath, 'r');
     file.seek(0, fs.SEEK_SET);
     for line in file.eachLine() {
         if line.empty() { continue; }
@@ -52,8 +52,8 @@ let loadFile in ToDo = fn(filepath) {
     }
 };
 
-let saveFile in ToDo = fn(filepath) {
-    let file = fs.fopen(filepath, 'w+');
+let saveFile in ToDo = fn(notesPath) {
+    let file = fs.fopen(notesPath, 'w+');
     self.writeToFile(file, self.items, '', false);
 };
 
