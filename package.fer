@@ -1,0 +1,10 @@
+let vec = import('std/vec');
+let package = import('std/package');
+
+let pkg = package.new(
+    name = 'WhatToDo',
+    desc = 'A basic command line todo list with the ability to create nested tasks.',
+    version = '1.0.0',
+    feral = '>=2.1.0',
+    author = vec.new('Chirag-Khandelwal <github@mail.chiragkh.me>')
+);

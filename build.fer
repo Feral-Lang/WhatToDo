@@ -1,3 +1,0 @@
-let builder = import('pkg/builder');
-
-# May as well be empty since nothing is to be done in this file as there's no C/C++ library to build.
