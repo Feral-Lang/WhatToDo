@@ -24,9 +24,6 @@ if notesDir.empty() {
 let todos = todo.new();
 todos.loadFile(notesPath);
 
-# let check = '2713'.getUTF8CharFromHexString();
-# let cross = '2717'.getUTF8CharFromHexString();
-
 let subcmd = feral.args[0];
 
 if subcmd == 'l' || subcmd == 'list' {
